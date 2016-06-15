@@ -28,13 +28,16 @@ class MarkdownPage(Page):
 	def render(self, args, kwargs):
 		self._load()
 
-		self.metadata['content']=markdown(self.markdown)
+		self.metadata['content']=markdown(self.markdown, ['markdown.extensions.extra'])
 
 		return super(MarkdownPage,self).render(args, kwargs)
 
 	def _load(self):
 		with open(self.filename) as fp:
+			rollback=0;
+
 			while True:
+				rollback=fp.tell()
 				line=fp.readline().strip()
 
 				if not line:
@@ -45,5 +48,7 @@ class MarkdownPage(Page):
 					self.metadata.update({key.lower(): value})
 				except ValueError:
 					break
+
+			fp.seek(rollback)
 
 			self.markdown=fp.read()
