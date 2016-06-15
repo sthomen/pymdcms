@@ -34,6 +34,9 @@ application.
 Documents served are by default located in `./pages/` and the url to them is
 simply the filename.
 
+There is a special document `index` that will be used for when no file was
+requested. If both a file an app binds to `index`, then the app will be used.
+
 The markdown is according to the python markdown module with a small twist, you
 can specify metadata at the beginning of the file to set variables and change
 the page title and display template from within the page, so if you wish to 
