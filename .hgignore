@@ -1,0 +1,3 @@
+glob:*.pyc
+glob:pages/*
+glob:apps/*
