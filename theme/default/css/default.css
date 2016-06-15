@@ -4,12 +4,18 @@ body {
 }
 
 a {
-	color: #cfc;
+	color: #00f;
 	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
 }
 
 #content {
 	background: #fff;
+
+	border-top: 1em solid #699169;
 
 	max-width: 800px;
 	width: 100%;

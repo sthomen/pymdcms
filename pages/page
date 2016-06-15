@@ -1,0 +1,9 @@
+Title: This is just a test
+
+# This is just a test
+
+So I wrote this thing this morning that lets you serve up markdown
+pages as html. It's a really small CMS system! Now I just have to
+come up with some way of making menus and such.
+
+[Go back](/ "Return to the index")
