@@ -14,18 +14,20 @@ if __name__ == '__main__':
 	config=ConfigParser()
 	config.read('cms.conf')
 
-	cp_config={
-		'/theme': {
-			'tools.staticdir.on': True,
-			'tools.staticdir.dir': os.path.join(
-				os.path.dirname(os.path.realpath(__file__)),
-				'theme'
-			)
-		}
-	}
+	cp_config={}
+
+	for name in config.options('static'):
+		cp_config.update({
+			config.get('static', name): {
+				'tools.staticdir.on': True,
+				'tools.staticdir.dir': os.path.join(
+					os.path.dirname(os.path.realpath(__file__)),
+					name
+				)
+			}
+		})
 
 	if sys.stdin.isatty():
-
 		cherrypy.config.update({
 			'global': {
 				'server.socket_host': config.get('test', 'host'),
