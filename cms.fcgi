@@ -11,7 +11,7 @@ import cherrypy
 from lib.dispatcher import Dispatcher
 
 if __name__ == '__main__':
-	config=ConfigParser(allow_no_value=True)
+	config=ConfigParser()
 	config.read('cms.conf')
 
 	cp_config={
@@ -28,8 +28,8 @@ if __name__ == '__main__':
 
 		cherrypy.config.update({
 			'global': {
-				'server.socket_host': '10.0.0.2',
-				'server.socket_port': 8001
+				'server.socket_host': config.get('test', 'host'),
+				'server.socket_port': int(config.get('test', 'port'))
 			}
 		})
 
