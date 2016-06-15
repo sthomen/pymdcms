@@ -5,23 +5,4 @@ Template: index
 
 You've successfully installed this Content Management System! Click [here](page "Another page") to see another page or [here](test "Test app") to see a test app.
 
-Configuration is done through the cms.conf file, and you simply tell it where
-to look for markdown pages
-
-	[pages]
-	path = pages
-
-These pages can specify metadata at the start of the page, rewriting almost
-all variables sent to the template engine, including changing the template
-used through a simple key/value pair at the start of the markdown file.
-
-The CMS can also hand over control to an app, again given the ability to
-override almost everything.
-
-	[apps]
-	test = apps.test.Test
-
-The system looks for the class Test in apps.test (apps/test.py) and attaches it
-at /test, instantiates it once and on every call runs
-`<class>.dispatch(args, kwargs)` with the path arguments in args and the query
-string/post values in kwargs.
+See the [readme](readme "Readme") for more information.
