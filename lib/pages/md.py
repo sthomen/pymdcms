@@ -41,7 +41,7 @@ class MarkdownPage(Page):
 					break
 
 				try:
-					key,value=[x.strip() for x in line.split(':')]
+					key,value=[x.strip() for x in line.split(':', 1)]
 					self.metadata.update({key.lower(): value})
 				except ValueError:
 					break

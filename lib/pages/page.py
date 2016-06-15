@@ -19,4 +19,6 @@ class Page(object):
 			'theme': self.config.get('global', 'theme')
 		})
 
+		self.metadata['content']=Template(text=self.metadata['content']).render(**self.metadata)
+
 		return self.lookup.get_template(self.metadata['template']).render(**self.metadata)
