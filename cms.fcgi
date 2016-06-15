@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
 		cherrypy.quickstart(Dispatcher(config), config=cp_config)
 	else:
-		app = cherrypy.Application(Dispatcher(), config=config)
+		app = cherrypy.Application(Dispatcher(config), config=cp_config)
 
 		cherrypy.config.update({
 			'environment': 'embedded',
