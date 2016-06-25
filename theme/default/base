@@ -20,7 +20,7 @@
  </head>
 
  <body>
-  <div id="header">
+  <div id="header" class="container">
    <h1>PyMDCMS</h1>
   </div>
   ${next.body()}

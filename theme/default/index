@@ -8,7 +8,7 @@
 ${menu("main")}
 </div>
 
-<div id="content">
+<div id="content" class="container">
  <div class="content-inner">
 
 ${content}
