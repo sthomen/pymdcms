@@ -4,6 +4,8 @@ from mako.template import Template
 from mako.lookup import TemplateLookup
 
 class Page(object):
+	lookup=None
+
 	def __init__(self, config):
 		self.config=config
 
@@ -11,7 +13,8 @@ class Page(object):
 			'template': 'page'
 		}
 
-		self.lookup=TemplateLookup(directories=[config.get('global', 'theme')], default_filters=['decode.utf8'], input_encoding='utf-8', output_encoding='utf-8')
+		if not Page.lookup:
+			Page.lookup=TemplateLookup(directories=[config.get('global', 'theme')], default_filters=['decode.utf8'], input_encoding='utf-8', output_encoding='utf-8')
 
 	def render(self, args, kwargs):
 		self.metadata.update({
