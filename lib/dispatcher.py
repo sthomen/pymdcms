@@ -6,6 +6,7 @@ import cherrypy
 
 from pages.md import Markdown
 from pages.apps import Apps
+from menus.menu import Menus
 
 class Dispatcher(object):
 	def __init__(self, config):
@@ -13,9 +14,11 @@ class Dispatcher(object):
 
 		self.pages={}
 
+		menus=Menus(config)
+
 		self.handlers=[
-			Markdown(config),
-			Apps(config)
+			Markdown(config, menus),
+			Apps(config, menus)
 		]
 
 		for handler in self.handlers:

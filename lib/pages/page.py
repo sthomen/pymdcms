@@ -6,22 +6,21 @@ from mako.lookup import TemplateLookup
 class Page(object):
 	lookup=None
 
-	def __init__(self, config):
+	def __init__(self, config, menus):
 		self.config=config
-
-		self.metadata={
-			'template': 'page'
-		}
 
 		if not Page.lookup:
 			Page.lookup=TemplateLookup(directories=[config.get('global', 'theme')], default_filters=['decode.utf8'], input_encoding='utf-8', output_encoding='utf-8')
 
-	def render(self, args, kwargs):
-		self.metadata.update({
-			'base': self.config.get('global', 'base'),
-			'theme': self.config.get('global', 'theme')
-		})
+		# set metadata defaults
+		self.metadata={
+			'base': config.get('global', 'base'),		# meta base path
+			'theme': config.get('global', 'theme'),		# default theme directory
+			'template': 'page',							# default page template
+			'menus': menus								# expose menus to template engine
+		}
 
+	def render(self, args, kwargs):
 		self.metadata['content']=Template(text=self.metadata['content']).render(**self.metadata)
 
 		return self.lookup.get_template(self.metadata['template']).render(**self.metadata)

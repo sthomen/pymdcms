@@ -11,18 +11,19 @@ from markdown import markdown
 from page import Page
 
 class Markdown(object):
-	def __init__(self, config):
+	def __init__(self, config, menus):
 		self.config=config
+		self.menus=menus
 
 		self.pages = {}
 		path = self.config.get('pages', 'path')
 
 		for fn in glob.glob(os.path.join(path, '*')):
-			self.pages.update(((os.path.basename(fn), MarkdownPage(self.config, fn)),))
+			self.pages.update(((os.path.basename(fn), MarkdownPage(self.config, menus, fn)),))
 
 class MarkdownPage(Page):
-	def __init__(self, config, fn=None):
-		super(MarkdownPage,self).__init__(config)
+	def __init__(self, config, menus, fn=None):
+		Page.__init__(self, config, menus)
 		self.filename=fn
 
 	def render(self, args, kwargs):

@@ -1,0 +1,31 @@
+## vim:ft=xml:
+
+<%def name="menu(name)">
+<%
+menu = menus.get(name)
+%>
+
+%if menu:
+<ul class="menu ${menu_classname(name)}">
+% for name,href in menu.items():
+<%
+# XXX	should we really handle index, and not leave it to
+# 	the configuration?
+
+if href == 'index':
+	href="/"
+%>
+ <li class="menu-item"><a href="${href}" title="${name}">${name}</a></li>
+% endfor
+</ul>
+%endif
+
+</%def>
+
+<%def name="menu_classname(name)">
+<%
+import re
+
+return 'menu-{}'.format(re.sub(r'[^_a-zA-Z0-9-]', '_', name))
+%>
+</%def>

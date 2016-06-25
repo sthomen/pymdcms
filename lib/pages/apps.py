@@ -7,18 +7,19 @@ import glob
 from page import Page
 
 class Apps(object):
-	def __init__(self, config):
+	def __init__(self, config, menus):
 		self.config=config
+		self.menus=menus
 
 		self.pages = {}
 		for name in self.config.options('apps'):
 			self.pages.update({
-				name: AppPage(config, self.config.get('apps', name))
+				name: AppPage(config, menus, self.config.get('apps', name))
 			})
 
 class AppPage(Page):
-	def __init__(self, config, path):
-		super(AppPage,self).__init__(config)
+	def __init__(self, config, menus, path):
+		Page.__init__(self, config, menus)
 
 		module,name=path.rsplit('.', 1)
 
