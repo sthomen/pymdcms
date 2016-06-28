@@ -1,0 +1,16 @@
+## vim:ft=xml:
+<%inherit file="base" />
+
+<%def name="page_title()">${title or ""}</%def>
+
+<div id="content" class="front">
+ <div class="content-inner">
+
+  <div class="sheep">
+   <img src="theme/thomen/images/sheep.png" />
+  </div>
+
+${content}
+
+ </div>
+</div>

@@ -1,0 +1,119 @@
+/* special front page tweaking */
+
+html,
+body {
+	min-height: 100%;
+}
+
+#content.front {
+	background: transparent;
+	box-shadow: none;
+	border: 0;
+}
+
+#content.front .content-inner {
+	padding: 0;
+}
+
+#content.front .sheep {
+	padding-top: 10%;
+	text-align: center;
+}
+
+#content.front .bottom {
+	position: absolute;
+
+	width: 100%;
+	min-height: 400px;
+	left: 0;
+	bottom: 0;
+
+	padding: 1em 0;
+
+	background: #699169 url(/theme/thomen/images/bg-sheep.png) no-repeat;
+	color: #fff;
+
+	text-align: center;
+}
+
+#content.front .bottom div {
+	display: inline-block;
+	width: 25%;
+	vertical-align: top;
+	text-align: left;
+	padding: 1em;
+}
+
+#content.front .bottom div:first-child {
+	border-color: #fff;
+	border-style: solid;
+	border-width: 0 1px 0 0;
+}
+
+#content.front .bottom a {
+	color: #fff;
+}
+
+#content.front .bottom ul,
+#content.front .bottom li {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#content.front .bottom li {
+	margin-bottom: 0.5em;
+}
+
+#content.front .bottom li span {
+	display: block;
+	position: relative;
+	margin-left: 30px;
+}
+
+#content.front .bottom li span.email:before,
+#content.front .bottom li span.phone:before,
+#content.front .bottom li span.location:before {
+	display: block;
+	position: absolute;
+	left: -30px;
+}
+
+#content.front .bottom li span.email:before {
+	content: url(/theme/thomen/images/email-icon.png);
+}
+
+#content.front .bottom li span.phone:before {
+	content: url(/theme/thomen/images/phone-icon.png);
+}
+
+#content.front .bottom li span.location:before {
+	content: url(/theme/thomen/images/location-icon.png);
+}
+
+@media screen and (min-width: 650px) and (max-width: 900px)  {
+	#content.front .bottom div {
+		width: 40%;
+	}
+}
+
+/* responsitivity */
+
+@media screen and (max-width: 649px) {
+	#content.front .bottom div {
+		width: 100%;
+		padding: 0;
+	}
+
+	/* using percent sizing here because using padding requires extra
+	 * markup due to the padding not being included in the width calculation
+	 */
+	#content.front .bottom {
+		width: 90%;
+		padding: 5%;
+	}
+
+	#content.front .bottom div:first-child {
+		border-width: 0 0 1px 0;
+	}
+}

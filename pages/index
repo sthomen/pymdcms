@@ -1,8 +1,33 @@
-Title: It Worked!
+Title: IT Firma S. Thom&eacute;n
+css: theme/thomen/css/front.css
 Template: index
 
-# It Worked!
+<div class="bottom" markdown="1">
+<div>
 
-You've successfully installed this Content Management System! Click [here](page "Another page") to see another page or [here](test "Test app") to see a test app.
+### Personalized consultation
 
-See the [readme](readme "Readme") for more information.
+Ignore the sheep. 
+
+I am a self-taught computer geek, with a special penchant for problem solving. 
+
+Ever tinkering with my apartmentful of gear, I will do my very best to help you, within the fields of networking, computer security, PC hardware diagnostics and so forth, even Android phones.
+
+I prefer to work with Unix-type systems, but I don't mind giving you a hand however I can.
+
+Low rates, no fleece.
+
+</div>
+<div markdown="1">
+
+### Contact information
+
+* <span class="email">[staffan@thomen.fi](mailto:staffan@thomen.fi)</span>
+* <span class="phone">[+358 (0)50 300 1042](tel:+358503001042)</span>
+* <span class="location">IT Firma S. Thom&eacute;n   
+  &Ouml;stanlidv&auml;gen 2 bostad 18   
+  68660 Jakobstad   
+  Finland   
+  </span>
+
+</div></div>

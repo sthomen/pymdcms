@@ -1,0 +1,17 @@
+## vim:ft=xml:
+<%inherit file="base" />
+<%namespace file="menu" import="menu" />
+
+<%def name="page_title()">${title or ""}</%def>
+
+<div id="main-menu" class="container">
+${menu("main")}
+</div>
+
+<div id="content" class="container">
+ <div class="content-inner">
+
+${content}
+
+ </div>
+</div>
