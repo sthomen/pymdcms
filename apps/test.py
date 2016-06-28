@@ -11,6 +11,6 @@ class Test(object):
 		self.metadata['title']='Applet'
 
 		return '''<p>This is an applet!, the arguments given to it were:
-                  <pre>(args) {}</pre>
+                  <pre>(PATH_INFO) {}</pre>
                   and:
-                  <pre>(kwargs) {}</pre></p>'''.format(', '.join(args), ', '.join(["{}={}".format(k,w) for k,w in kwargs.items()]))
+                  <pre>(QUERY_STRING) {}</pre></p>'''.format(', '.join(args), ', '.join(["{} = {}".format(k,w) for k,w in kwargs.items()]))
