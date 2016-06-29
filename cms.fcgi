@@ -18,14 +18,14 @@ if __name__ == '__main__':
 
 	cp_config={}
 
+	root=os.path.dirname(os.path.realpath(__file__))
+
 	for name in config.options('static'):
 		cp_config.update({
-			config.get('static', name): {
+			name: {
 				'tools.staticdir.on': True,
-				'tools.staticdir.dir': os.path.join(
-					os.path.dirname(os.path.realpath(__file__)),
-					name
-				)
+				'tools.staticdir.root': root,
+				'tools.staticdir.dir': config.get('static', name)
 			}
 		})
 
