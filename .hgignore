@@ -1,6 +1,4 @@
 glob:*.pyc
-glob:pages/*
-glob:apps/*
 glob:pebble/*
 glob:.well-known/*
 glob:old/*

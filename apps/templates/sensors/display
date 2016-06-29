@@ -1,0 +1,9 @@
+<div class="app-sensors">
+ <h1>Sensors</h1>
+%if data:
+% for item in data:
+ <p>${item.oid}: ${item.value}</p>
+% endfor
+%endif
+ <p><small>Last updated: ${updated}</small></p>
+</div>
