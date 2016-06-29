@@ -15,11 +15,6 @@ class Sensors(Applet):
 	def __init__(self, config, menus):
 		Applet.__init__(self, config, menus)
 
-		self.metadata={
-			'title':'Sensors',
-			'css':	'apps/css/sensors.css'
-		}
-
 		self.add_template_dir(os.path.join(os.path.dirname(__file__), 'templates', 'sensors'))
 
 		# XXX
@@ -41,19 +36,17 @@ class Sensors(Applet):
 				Sensors.sensors.start()
 
 	def dispatch(self, *args, **kwargs):
+		self.metadata={
+			'title':'Sensors',
+			'css':	'apps/css/sensors.css'
+		}
+
 		if len(args)>1 and args[1]=='ajax':
 			return self.ajax_sensors()
 		else:
 			return self.show_sensors()
 
 	def show_sensors(self):
-		# because the ajax code below manipulates the object metadata
-		if 'content-type' in self.metadata:
-			del self.metadata['content-type']
-
-		if 'template' in self.metadata:
-			del self.metadata['template']
-
 		return self.render('display', {'data': self.sensors.data, 'updated': self.sensors.updated})
 
 	def ajax_sensors(self):

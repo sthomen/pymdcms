@@ -5,11 +5,11 @@
 
 %if data:
 % for item in data.values():
-<p>${item[2].capitalize()}: ${float(item[3]) / 100}
+<p>${item[2].capitalize()}: ${float(item[3]) / 100} \
 %  if item[2] == 'temperature':
-&deg;C
+&deg;C \
 %  elif item[2] == 'humidity':
-	%%
+%% \
 %  endif
 </p>
 % endfor
