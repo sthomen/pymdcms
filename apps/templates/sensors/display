@@ -1,8 +1,17 @@
 <div class="app-sensors">
  <h1>Sensors</h1>
+
+## the index to item here is the penultimate number of the SNMP OID (where the last one is the index)
+
 %if data:
-% for item in data:
- <p>${item.oid}: ${item.value}</p>
+% for item in data.values():
+<p>${item[2].capitalize()}: ${float(item[3]) / 100}
+%  if item[2] == 'temperature':
+&deg;C
+%  elif item[2] == 'humidity':
+	%%
+%  endif
+</p>
 % endfor
 %endif
  <p><small>Last updated: ${updated}</small></p>
