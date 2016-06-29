@@ -25,7 +25,7 @@ class AppPage(Page):
 
 		app=__import__(module, fromlist=[ name ])
 
-		self.app=getattr(app, name)()
+		self.app=getattr(app, name)(config, menus)
 
 	def render(self, args, kwargs):
 		if hasattr(self.app, 'metadata'):
