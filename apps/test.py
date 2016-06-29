@@ -1,7 +1,7 @@
 # vim:ts=4:sw=4:
 
 class Test(object):
-	def __init__(self):
+	def __init__(self, config, menus):
 		self.metadata={}
 
 	def dispatch(self, *args, **kwargs):
