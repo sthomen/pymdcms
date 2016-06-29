@@ -6,7 +6,6 @@ from mako.lookup import TemplateLookup
 class Applet(object):
 	def __init__(self, config, menus):
 		self.lookup=TemplateLookup(
-			directories=[config.get('global', 'theme')],
 			default_filters=['decode.utf8'],
 			input_encoding='utf-8',
 			output_encoding='utf-8')
