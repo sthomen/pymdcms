@@ -5,22 +5,46 @@ body {
 	min-height: 100%;
 }
 
-#content.front {
+#content {
 	background: transparent;
 	box-shadow: none;
 	border: 0;
 }
 
-#content.front .content-inner {
+.container {
+	box-shadow: none;
+}
+
+.content-inner {
 	padding: 0;
 }
 
-#content.front .sheep {
+.sheep {
 	padding-top: 10%;
 	text-align: center;
 }
 
-#content.front .bottom {
+ul.menu {
+	background: transparent;
+	text-align: center;
+	margin: 2em 0;
+}
+
+ul.menu li {
+	border: none;
+	background: #fff;
+	box-shadow: 0 3px 2px rgba(0,0,0,0.25);
+
+	width: 30%;
+	margin: 1%;
+	padding: 1%;
+}
+
+ul.menu a {
+	color: #699169;
+}
+
+.bottom {
 	position: absolute;
 
 	width: 100%;
@@ -36,7 +60,7 @@ body {
 	text-align: center;
 }
 
-#content.front .bottom div {
+.bottom div {
 	display: inline-block;
 	width: 25%;
 	vertical-align: top;
@@ -44,63 +68,63 @@ body {
 	padding: 1em;
 }
 
-#content.front .bottom div:first-child {
+.bottom div:first-child {
 	border-color: #fff;
 	border-style: solid;
 	border-width: 0 1px 0 0;
 }
 
-#content.front .bottom a {
+.bottom a {
 	color: #fff;
 }
 
-#content.front .bottom ul,
-#content.front .bottom li {
+.bottom ul,
+.bottom li {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
 }
 
-#content.front .bottom li {
+.bottom li {
 	margin-bottom: 0.5em;
 }
 
-#content.front .bottom li span {
+.bottom li span {
 	display: block;
 	position: relative;
 	margin-left: 30px;
 }
 
-#content.front .bottom li span.email:before,
-#content.front .bottom li span.phone:before,
-#content.front .bottom li span.location:before {
+.bottom li span.email:before,
+.bottom li span.phone:before,
+.bottom li span.location:before {
 	display: block;
 	position: absolute;
 	left: -30px;
 }
 
-#content.front .bottom li span.email:before {
+.bottom li span.email:before {
 	content: url(/theme/thomen/images/email-icon.png);
 }
 
-#content.front .bottom li span.phone:before {
+.bottom li span.phone:before {
 	content: url(/theme/thomen/images/phone-icon.png);
 }
 
-#content.front .bottom li span.location:before {
+.bottom li span.location:before {
 	content: url(/theme/thomen/images/location-icon.png);
-}
-
-@media screen and (min-width: 650px) and (max-width: 900px)  {
-	#content.front .bottom div {
-		width: 40%;
-	}
 }
 
 /* responsitivity */
 
+@media screen and (max-height: 800px) {
+	.bottom {
+		position: initial;
+	}
+}
+
 @media screen and (max-width: 649px) {
-	#content.front .bottom div {
+	.bottom div {
 		width: 100%;
 		padding: 0;
 	}
@@ -108,12 +132,19 @@ body {
 	/* using percent sizing here because using padding requires extra
 	 * markup due to the padding not being included in the width calculation
 	 */
-	#content.front .bottom {
+	.bottom {
 		width: 90%;
 		padding: 5%;
 	}
 
-	#content.front .bottom div:first-child {
+	.bottom div:first-child {
 		border-width: 0 0 1px 0;
 	}
 }
+
+@media screen and (min-width: 650px) and (max-width: 900px)  {
+	.bottom div {
+		width: 40%;
+	}
+}
+

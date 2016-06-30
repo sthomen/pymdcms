@@ -1,5 +1,6 @@
 ## vim:ft=xml:
 <%inherit file="base" />
+<%namespace file="menu" import="menu" />
 
 <%def name="page_title()">${title or ""}</%def>
 
@@ -8,6 +9,10 @@
 
   <div class="sheep">
    <img src="theme/thomen/images/sheep.png" />
+  </div>
+
+  <div id="main-menu" class="container">
+   ${menu("main-front")}
   </div>
 
 ${content}
