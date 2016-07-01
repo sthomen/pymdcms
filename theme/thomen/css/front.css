@@ -41,6 +41,8 @@ ul.menu li {
 }
 
 ul.menu a {
+	display: inline-block;
+	width: 100%;
 	color: #699169;
 }
 
