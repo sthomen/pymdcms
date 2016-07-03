@@ -30,7 +30,7 @@ class Dispatcher(object):
 			if args[0] in self.pages.keys():
 				output=self.pages[args[0]].render(args, kwargs)
 
-				if 'content-type' in self.pages[args[0]].metadata:
+				if hasattr(self.pages[args[0]], "metadata") and 'content-type' in self.pages[args[0]].metadata:
 					cherrypy.response.headers['Content-Type']=self.pages[args[0]].metadata['content-type']
 
 				return output
