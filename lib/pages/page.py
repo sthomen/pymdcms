@@ -14,10 +14,10 @@ class Page(object):
 
 		# set metadata defaults
 		self.metadata={
-			'base': config.get('global', 'base'),		# meta base path
-			'theme': config.get('global', 'theme'),		# default theme directory
-			'template': 'page',							# default page template
-			'menus': menus								# expose menus to template engine
+			'base': config.get('global', 'base'),
+			'theme': config.get('global', 'theme'),
+			'template': 'page',
+			'menus': menus
 		}
 
 	def render(self, args, kwargs):

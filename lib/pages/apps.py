@@ -28,9 +28,15 @@ class AppPage(Page):
 		self.app=getattr(app, name)(config, menus)
 
 	def render(self, args, kwargs):
+		metadata=self.metadata.copy()
+
 		self.metadata['content']=self.app.dispatch(*args, **kwargs)
 
 		if hasattr(self.app, 'metadata'):
 			self.metadata.update(self.app.metadata)
 
-		return super(AppPage,self).render(args, kwargs)
+		output=super(AppPage,self).render(args, kwargs)
+
+		self.metadata=metadata
+
+		return output
