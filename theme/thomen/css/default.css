@@ -27,7 +27,10 @@ pre {
 	width: 100%;
 
 	margin: 0 auto 0 auto;
+}
 
+#main-menu,
+#content {
 	box-shadow: 0em 0.5em 1em rgba(0,0,0,0.25);
 }
 

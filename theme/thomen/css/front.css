@@ -5,6 +5,7 @@ body {
 	min-height: 100%;
 }
 
+#main-menu,
 #content {
 	background: transparent;
 	box-shadow: none;

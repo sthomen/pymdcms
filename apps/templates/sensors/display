@@ -4,16 +4,18 @@
 ## the index to item here is the penultimate number of the SNMP OID (where the last one is the index)
 
 %if data:
-% for index,item in enumerate(data.values()):
+% for index,item in data.items():
 <p>${item[2].capitalize()}: ${float(item[3]) / 100} \
 %  if item[2] == 'temperature':
 &deg;C \
 %  elif item[2] == 'humidity':
 %% \
 %  endif
-${graphs[index]}
+${graphs.get(index)}
 </p>
 % endfor
+<pre>
+</pre>
 %endif
  <p><small>Last updated: ${updated}</small></p>
 </div>

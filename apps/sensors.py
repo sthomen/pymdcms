@@ -35,7 +35,8 @@ class Sensors(Applet):
 					config.get('sensors', 'community'),
 					config.get('sensors', 'version'),
 					config.get('sensors', 'oid'),
-					polltime=300)
+					queuesize=15,
+					polltime=1800)
 
 				Sensors.sensors.start()
 
@@ -55,11 +56,9 @@ class Sensors(Applet):
 		return output
 
 	def show_sensors(self):
-		graphs=[]
-		for i in range(len(self.sensors.data)):
-			graphs.append(self.inline_graph(i+1))
+		self.metadata['js']='apps/js/sensors.js'
 
-		return self.render('display', {'data': self.sensors.data, 'updated': self.sensors.updated, 'graphs': graphs})
+		return self.render('display', {'data': self.sensors.data, 'updated': self.sensors.updated, 'graphs': self.sensors.graphs})
 
 	def ajax_sensors(self):
 		self.metadata['content-type']='application/json'
@@ -74,12 +73,7 @@ class Sensors(Applet):
 		return self.inline_graph(index)
 
 	def inline_graph(self, index):
-		data=OrderedDict([(date, value) for date, value in self.sensors.history[index] if date != None])
-
-		graph=LineGraph(self.sensors.updated, max(data.values()) or 100, data=[data], granularity=self.sensors.polltime)
-		graph.draw()
-
-		return graph.write()
+		return self.sensors.graph[index]
 		
 class SnmpSensors(Thread):
 	# XXX poor man's MIB
@@ -106,6 +100,8 @@ class SnmpSensors(Thread):
 		self.data={}
 		self.history={}
 
+		self.graphs={}
+
 		self.done=False
 
 	def run(self):
@@ -128,6 +124,7 @@ class SnmpSensors(Thread):
 			self.data=self.flip_snmp_data(session.walk(self.oid))
 			self.updated=datetime.now()
 			self.store_history()
+			self.render_graphs()
 
 	def flip_snmp_data(self, data):
 		"""
@@ -163,3 +160,28 @@ class SnmpSensors(Thread):
 				self.history[int(index)]=deque([(None,None),]*self.queuesize, self.queuesize)
 
 			self.history[int(index)].appendleft((self.updated.strftime(self.dateformat), float(self.data[index].get(self.mib['value']) or 0) / 100),)
+
+	def render_graphs(self):
+		"""
+		This method renders SVG graphs from self.history
+
+		Since self.graphs may be queried at any time, render first and then
+		replace
+		"""
+
+		graphs={}
+		for index in self.data.keys():
+			graphs.update({index: self.render_graph(int(index))})
+
+		self.graphs=graphs
+
+	def render_graph(self, index):
+		"""
+		Render a single graph for self.history[index]
+		"""
+		data=OrderedDict([(date, value) for date, value in self.history[index] if date != None])
+
+		graph=LineGraph(self.updated, max(data.values()) or 100, data=[data], granularity=self.polltime)
+		graph.draw()
+
+		return graph.write()
