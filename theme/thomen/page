@@ -5,7 +5,9 @@
 <%def name="page_title()">${title or ""}</%def>
 
 <div id="header" class="container">
- <img src="theme/thomen/images/sheep.png" />
+ <div class="header-inner">
+  <img title="Cloud Sheep" src="theme/thomen/images/sheep.png" />
+ </div>
 </div>
 
 <div id="main-menu" class="container">
