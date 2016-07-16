@@ -1,3 +1,4 @@
+## vim:ft=xml
 <div class="app-sensors">
  <h1>Sensors</h1>
 
@@ -5,13 +6,15 @@
 
 %if data:
 % for index,item in data.items():
-<p>${item[2].capitalize()}: ${float(item[3]) / 100} \
+<p>${item[2].capitalize()}: <span class="value-${index}">${float(item[3]) / 100}</span> \
 %  if item[2] == 'temperature':
 &deg;C \
 %  elif item[2] == 'humidity':
 %% \
 %  endif
+<div class="graph-${index}">
 ${graphs.get(index)}
+</div>
 </p>
 % endfor
 <pre>
