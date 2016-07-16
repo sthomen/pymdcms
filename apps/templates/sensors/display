@@ -20,5 +20,4 @@ ${graphs.get(index)}
 <pre>
 </pre>
 %endif
- <p><small>Last updated: ${updated}</small></p>
 </div>
