@@ -49,7 +49,7 @@ class Sensors(Applet):
 		if len(args)==2 and args[1]=='ajax':
 			output=self.ajax_sensors()
 		elif len(args)==3 and args[1]=='graph':
-			output=self.graph(int(args[2]))
+			output=self.graph(args[2])
 		else:
 			output=self.show_sensors()
 
@@ -70,10 +70,7 @@ class Sensors(Applet):
 		self.metadata['content-type']='image/svg+xml'
 		self.metadata['template']='ajax'
 
-		return self.inline_graph(index)
-
-	def inline_graph(self, index):
-		return self.sensors.graph[index]
+		return self.sensors.graphs.get(index)
 		
 class SnmpSensors(Thread):
 	# XXX poor man's MIB
