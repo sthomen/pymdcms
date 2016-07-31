@@ -1,9 +1,11 @@
 (function(w,d) {
+	var dp;
+
 	w.addEventListener('load', function(evt) {
 		setupDatapoints();
 		w.setInterval(function(evt) {
 			update();
-		}, 900000);	/* 15 minutes */
+		}, 60000);
 	}, false);
 
 	function update() {
@@ -11,7 +13,7 @@
 			var data=JSON.parse(this.responseText);
 			for (var key in data) {
 				var element=d.querySelector('.value-' + data[key][1]);
-				element.innerHTML=(parseInt(data[key][3])/100);
+				element.innerHTML=(parseInt(data[key][3])/100.0);
 
 				updateGraph(key);
 			}
@@ -23,13 +25,21 @@
 			var data=this.responseText;
 			var element=d.querySelector('.graph-' + index);
 			element.innerHTML=data;
+
+			updateDatapoints();
 		});
 	}
 
 	function setupDatapoints() {
-		var datapoints=d.querySelectorAll('.datapoint');
-		var dp=new Datapopup();
+		dp=new Datapopup();
 		dp.render();
+
+		updateDatapoints();
+	}
+
+
+	function updateDatapoints() {
+		var datapoints=d.querySelectorAll('.datapoint');
 
 		for (var i=0;i<datapoints.length;i++) {
 			if (!datapoints[i].hasOwnProperty('dp')) {
