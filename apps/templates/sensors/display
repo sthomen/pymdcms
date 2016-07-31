@@ -6,7 +6,7 @@
 
 %if data:
 % for index,item in data.items():
-<p>${item[2].capitalize()}: <span class="value-${index}">${float(item[3]) / 100}</span> \
+<p>${item[2].capitalize()}: <span class="value-${index}">${float(item[3]) / 100}</span>\
 %  if item[2] == 'temperature':
 &deg;C \
 %  elif item[2] == 'humidity':
