@@ -176,9 +176,24 @@ class SnmpSensors(Thread):
 		"""
 		Render a single graph for self.history[index]
 		"""
+
 		data=OrderedDict([(date, value) for date, value in self.history[index] if date != None])
 
-		graph=LineGraph(self.updated, max(data.values()) or 100, data=[data], granularity=self.polltime)
+		if data.values():
+			big=max(data.values())
+			small=min(data.values())
+
+			if small > 0:
+				small=0
+
+			if big < 0:
+				big=0
+
+		else:
+			big=20
+			small=0
+
+		graph=LineGraph(self.updated, big, small, data=[data], granularity=self.polltime)
 		graph.draw()
 
 		return graph.write()

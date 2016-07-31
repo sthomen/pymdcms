@@ -1,14 +1,16 @@
 # vim:ts=4:sw=4:
 
 from StringIO import StringIO
-from math import ceil
+from math import ceil,floor
 
 import svgwrite
 
 class Graph(object):
-	def __init__(self, height, width, data, filename):
+	def __init__(self, max, min, width, data, filename):
 		self.data=data
-		self.height=int(ceil(height))
+		self.max=int(max)
+		self.min=int(min)
+		self.height=self.max-self.min
 		self.width=width
 
 		self.drawing=svgwrite.Drawing(filename, profile='tiny')
@@ -51,22 +53,27 @@ class Graph(object):
 		else:
 			gridstep=500
 
+		positive=range(0, self.max+1, gridstep)
+		negative=[-x for x in range(0, -(self.min-1), gridstep)]
+		
 		# horizontal grid lines
-		for y in range(self.height, -gridstep, -gridstep):
+		for y in list(set(positive + negative)):
 			color='#ccc'
 			width=0.1
 
-			if y == self.height:
+			if y == 0:
 				color='#000'
 				width=0.3
-			else:
-				texty=y+(3*self.scale)
-				no=self.drawing.text(str(self.height-y), (0,texty), font_size=3*self.scale)
-				glow=self.drawing.text(str(self.height-y), (0,texty), font_size=3*self.scale, stroke_width=0.5*self.scale, stroke='#fff')
-				gridnumbers.add(glow)
-				gridnumbers.add(no)
 
-			grid.add(self.drawing.line((0,y),(self.width,y), stroke=color, stroke_width=width*self.scale))
+			ypos=self.height-(y-self.min)
+
+			texty=ypos+(3*self.scale)
+			no=self.drawing.text(str(y), (0,texty), font_size=3*self.scale)
+			glow=self.drawing.text(str(y), (0,texty), font_size=3*self.scale, stroke_width=0.5*self.scale, stroke='#fff')
+			gridnumbers.add(glow)
+			gridnumbers.add(no)
+
+			grid.add(self.drawing.line((0,ypos),(self.width,ypos), stroke=color, stroke_width=width*self.scale))
 
 		self.layers.update({-1: grid, 99: gridnumbers})
 

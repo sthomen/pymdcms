@@ -5,6 +5,7 @@
 # - arbitrary time resolution
 
 from datetime import datetime, timedelta
+from math import ceil,floor
 import copy
 import json
 
@@ -34,7 +35,7 @@ class LineGraph(Graph):
 	SMALL=2	
 	TINY=3
 
-	def __init__(self, start, height, width=None, data=[], filename='drawing.svg', granularity=86400):
+	def __init__(self, start, max, min=0, width=None, data=[], filename='drawing.svg', granularity=86400):
 		"""
 		Initialize a new graph
 
@@ -52,9 +53,9 @@ class LineGraph(Graph):
 		"""
 
 		if not width:
-			width=height * 4
+			width=(ceil(max) - floor(min)) * 4
 
-		super(LineGraph, self).__init__(height, width, data, filename)
+		super(LineGraph, self).__init__(max, min, width, data, filename)
 
 		# default values
 		self.formats={
@@ -136,12 +137,12 @@ class LineGraph(Graph):
 
 			for key,value in data.items():
 				date=datetime.strptime(key, self.formats[self.DATE])
-		
+
 				# local time delta
 				ltdelta=self.date_start-date
 
 				xpos=self.width-(self.width/(tdelta.total_seconds()/ltdelta.total_seconds()))
-				ypos=self.height-value
+				ypos=self.max-value
 
 				pointdata=json.dumps({'date': date.isoformat(), 'value': self.height-ypos})
 
@@ -172,14 +173,6 @@ class LineGraph(Graph):
 
 				paths[pidx].push(mode)
 				paths[pidx].push(list(cur))
-
-				# FIXME This is pretty ugly, but it should keep the date indexes pretty clean
-				#
-				#     <   14: show abbreviated month and date every day
-				# 14  <=  30: show abbreviated month and date every week
-				# 30  <=  60: show abbreviated month and date other week
-				# 60  <= 365: show full month name centered under every month
-				# 365 <	    : show year centered under every year
 
 				if self.granularity < 60:
 					timestamps.add(self.drawing.text(date.strftime(self.formats[self.SECOND]),
