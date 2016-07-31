@@ -90,11 +90,11 @@
 
 			self.popup.style.left=(scrollLeft + evt.clientX + self.offsetX) + "px";
 			self.popup.style.top=(scrollTop + evt.clientY + self.offsetY) + "px";
-			self.popup.style.visibility='visible';
+			self.popup.classList.add('visible');
 		}
 
 		this.hide=function(evt) {
-			self.popup.style.visibility='hidden';
+			self.popup.classList.remove('visible');
 		}
 	}
 
