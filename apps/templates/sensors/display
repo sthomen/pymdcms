@@ -12,12 +12,11 @@
 %  elif item[2] == 'humidity':
 %% \
 %  endif
+</p>
+<p>Sensor id: <span>${item[5]}</span></p>
 <div class="graph-${index}">
 ${graphs.get(index)}
 </div>
-</p>
 % endfor
-<pre>
-</pre>
 %endif
 </div>

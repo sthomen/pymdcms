@@ -77,7 +77,9 @@ class SnmpSensors(Thread):
 	mib={
 		'index':	1,
 		'type': 	2,
-		'value':	3
+		'value':	3,
+		'updated':	4,
+		'id':		5
 	}
 
 	def __init__(self, hostname, community, version, oid, polltime=60, queuesize=10, dateformat='%Y-%m-%d %H:%M:%S'):

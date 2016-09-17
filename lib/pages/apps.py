@@ -37,6 +37,6 @@ class AppPage(Page):
 
 		output=super(AppPage,self).render(args, kwargs)
 
-		self.metadata=metadata.copy()
+		self.metadata=metadata
 
 		return output
