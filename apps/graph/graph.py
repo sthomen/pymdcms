@@ -92,13 +92,22 @@ class Graph(object):
 		"""
 		Save svgwrite object to the filename set in __init__()
 		"""
-		self.drawing.save()
+
+		try:
+			self.drawing.save()
+		except (TypeError, ValueError), e:
+			return None
 
 	def write(self):
 		"""
 		Returns the rendered svg file in a string
 		"""
 		svg=StringIO()
-		self.drawing.write(svg)
+
+		try:
+			self.drawing.write(svg)
+		except (TypeError, ValueError), e:
+			return None
+
 		svg.seek(0)
 		return svg.read()
