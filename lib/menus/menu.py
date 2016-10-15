@@ -5,6 +5,7 @@ import os.path
 import glob
 
 from ConfigParser import ConfigParser
+from collections import OrderedDict
 
 class Menus(object):
 	def __init__(self, config):
@@ -42,7 +43,7 @@ class Menus(object):
 
 class Menu(object):
 	def __init__(self, path):
-		self._items = {}
+		self._items = OrderedDict()
 
 		cp=ConfigParser()
 		# override optionxform to preserve case
