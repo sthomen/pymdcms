@@ -37,9 +37,11 @@ class Dispatcher(object):
 
 	@cherrypy.expose
 	def default(self, *args, **kwargs):
+		method=cherrypy.request.method
+
 		if len(args) > 0:
 			if args[0] in self.pages.keys():
-				output=self.pages[args[0]].render(args, kwargs)
+				output=self.pages[args[0]].render(method, args, kwargs)
 
 				if hasattr(self.pages[args[0]], "metadata") and 'content-type' in self.pages[args[0]].metadata:
 					cherrypy.response.headers['Content-Type']=self.pages[args[0]].metadata['content-type']
@@ -50,4 +52,4 @@ class Dispatcher(object):
 
 		else:
 			if 'index' in self.pages.keys():
-				return self.pages['index'].render(args, kwargs)
+				return self.pages['index'].render(method, args, kwargs)
