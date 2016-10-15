@@ -1,37 +1,58 @@
 # vim:ts=4:sw=4:
 
+import sys
+import os.path
+import glob
+
+from ConfigParser import ConfigParser
+
 class Menus(object):
 	def __init__(self, config):
 		self.config=config
 
 		self.menus = {}
 
-		for name in self.config.options('menus'):
-			self.menus.update({
-				name: Menu(config, name, self.config.get('menus', name))
-			})
+		self.reload()
+
+	def reload(self):
+		path = self.config.get('menus', 'path')
+
+		for fn in glob.glob(os.path.join(path, '*')):
+			self.menus.update({fn: Menu(fn)})
 
 	def has(self, menu):
-		if menu in self.menus.keys():
+		if menu in self.find(menu):
 			return True
 
 		return False
 
 	def get(self, menu):
-		return self.menus.get(menu)
+		return self.find(menu)
+
+	def find(self, name):
+		for id,menu in self.menus.items():
+			if menu.name == name:
+				return menu
+
+		return None
+			
 
 	def __repr__(self):
 		return repr(self.menus)
 
 class Menu(object):
-	def __init__(self, config, name, section):
-		self.config = config
-		self.name = name
-
+	def __init__(self, path):
 		self._items = {}
 
-		for title in self.config.options(section):
-			self._items.update({ title: self.config.get(section, title) })
+		cp=ConfigParser()
+		# override optionxform to preserve case
+		cp.optionxform=str
+		cp.read(path)
+
+		self.name = cp.get('menu', 'name')
+
+		for title in cp.options('links'):
+			self._items.update({ title: cp.get('links', title) })
 
 	def items(self):
 		return self._items.items()
