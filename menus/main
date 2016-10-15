@@ -3,5 +3,5 @@ name = main
 
 [links]
 Home = index
-Sensors = sensors
 Domain services = domain
+Sensors = sensors
