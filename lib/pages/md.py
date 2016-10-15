@@ -30,12 +30,12 @@ class MarkdownPage(Page):
 		Page.__init__(self, config, menus)
 		self.filename=fn
 
-	def render(self, args, kwargs):
+	def render(self, method, args, kwargs):
 		self._load()
 
 		self.metadata['content']=markdown(self.markdown, ['markdown.extensions.extra'])
 
-		return super(MarkdownPage,self).render(args, kwargs)
+		return super(MarkdownPage,self).render(method, args, kwargs)
 
 	def _load(self):
 		with open(self.filename) as fp:

@@ -40,7 +40,7 @@ class Sensors(Applet):
 
 				Sensors.sensors.start()
 
-	def dispatch(self, *args, **kwargs):
+	def dispatch(self, method, *args, **kwargs):
 		self.metadata={
 			'title':'Sensors',
 			'css':	'apps/css/sensors.css'
