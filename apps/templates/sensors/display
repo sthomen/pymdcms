@@ -6,6 +6,7 @@
 
 %if data:
 % for index,item in data.items():
+<p>Sensor id: <span>${item[5]}</span></p>
 <p>${item[2].capitalize()}: <span class="value-${index}">${float(item[3]) / 100}</span>\
 %  if item[2] == 'temperature':
 &deg;C \
@@ -13,7 +14,6 @@
 %% \
 %  endif
 </p>
-<p>Sensor id: <span>${item[5]}</span></p>
 <div class="graph-${index}">
 ${graphs.get(index)}
 </div>
