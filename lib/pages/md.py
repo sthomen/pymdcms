@@ -16,10 +16,14 @@ class Markdown(object):
 		self.menus=menus
 
 		self.pages = {}
+
+		self.reload()
+
+	def reload(self):
 		path = self.config.get('pages', 'path')
 
 		for fn in glob.glob(os.path.join(path, '*')):
-			self.pages.update(((os.path.basename(fn), MarkdownPage(self.config, menus, fn)),))
+			self.pages.update(((os.path.basename(fn), MarkdownPage(self.config, self.menus, fn)),))
 
 class MarkdownPage(Page):
 	def __init__(self, config, menus, fn=None):

@@ -20,6 +20,9 @@ class Page(object):
 			'menus': menus
 		}
 
+	def reload(self):
+		pass
+
 	def render(self, args, kwargs):
 		self.metadata['content']=Template(text=self.metadata['content']).render(**self.metadata)
 

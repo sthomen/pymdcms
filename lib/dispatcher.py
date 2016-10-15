@@ -27,10 +27,13 @@ class Dispatcher(object):
 		for handler in self.handlers:
 			self.pages.update(handler.pages)
 
-		signal.signal(signal.SIGHUP, self.reload_menus)
+		signal.signal(signal.SIGHUP, self.refresh_content)
+		signal.signal(signal.SIGUSR1, self.refresh_content)
 
-	def reload_menus(self, signal, frame):
+	def refresh_content(self, signal, frame):
 		self.menus.reload()
+		for handler in self.handlers:
+			handler.reload()
 
 	@cherrypy.expose
 	def default(self, *args, **kwargs):
