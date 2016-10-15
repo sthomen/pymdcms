@@ -12,8 +12,6 @@ from lib.dispatcher import Dispatcher
 
 if __name__ == '__main__':
 	config=ConfigParser()
-	# override optionxform to preserve case
-	config.optionxform=str
 	config.read('cms.conf')
 
 	cp_config={}
