@@ -1,0 +1,6 @@
+[menu]
+name = main-front
+
+[links]
+Sensors = sensors
+Domain services = domain
