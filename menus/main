@@ -1,0 +1,8 @@
+[menu]
+name = main
+
+[links]
+# 'index' makes the link go to / for now (modulated by base href in global)
+Home = index
+Test page = page
+Test app = test
