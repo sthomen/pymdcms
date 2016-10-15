@@ -1,6 +1,7 @@
 # vim:ts=4:sw=4:
 
 import os.path
+import signal
 
 import cherrypy
 
@@ -9,20 +10,27 @@ from pages.apps import Apps
 from menus.menu import Menus
 
 class Dispatcher(object):
+	menus=None
+
 	def __init__(self, config):
 		self.config=config
 
 		self.pages={}
 
-		menus=Menus(config)
+		self.menus=Menus(config)
 
 		self.handlers=[
-			Markdown(config, menus),
-			Apps(config, menus)
+			Markdown(config, self.menus),
+			Apps(config, self.menus)
 		]
 
 		for handler in self.handlers:
 			self.pages.update(handler.pages)
+
+		signal.signal(signal.SIGHUP, self.reload_menus)
+
+	def reload_menus(self, signal, frame):
+		self.menus.reload()
 
 	@cherrypy.expose
 	def default(self, *args, **kwargs):
