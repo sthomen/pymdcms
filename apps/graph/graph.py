@@ -8,8 +8,8 @@ import svgwrite
 class Graph(object):
 	def __init__(self, max, min, width, data, filename):
 		self.data=data
-		self.max=int(max)
-		self.min=int(min)
+		self.max=int(ceil(max))
+		self.min=int(floor(min))
 		self.height=self.max-self.min
 		self.width=width
 
