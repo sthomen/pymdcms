@@ -144,7 +144,7 @@ class LineGraph(Graph):
 				xpos=self.width-(self.width/(tdelta.total_seconds()/ltdelta.total_seconds()))
 				ypos=self.max-value
 
-				pointdata=json.dumps({'date': date.isoformat(), 'value': self.height-ypos})
+				pointdata=json.dumps({'date': date.isoformat(), 'value': value})
 
 				cur=(xpos, ypos)
 
