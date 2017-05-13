@@ -3,6 +3,8 @@
 import os.path
 import signal
 
+import logging
+
 import cherrypy
 
 from pages.md import Markdown
@@ -15,9 +17,15 @@ class Dispatcher(object):
 	def __init__(self, config):
 		self.config=config
 
+		self.log=logging.getLogger(__name__)
+
 		self.pages={}
 
+		self.log.info("Loading menus")
+
 		self.menus=Menus(config)
+
+		self.log.info("Loading handlers")
 
 		self.handlers=[
 			Markdown(config, self.menus),
@@ -30,14 +38,21 @@ class Dispatcher(object):
 		signal.signal(signal.SIGHUP, self.refresh_content)
 		signal.signal(signal.SIGUSR1, self.refresh_content)
 
+		self.log.info("CMS started")
+
+
 	def refresh_content(self, signal, frame):
 		self.menus.reload()
 		for handler in self.handlers:
 			handler.reload()
 
+		self.log.info("Content handlers reloaded")
+
 	@cherrypy.expose
 	def default(self, *args, **kwargs):
 		method=cherrypy.request.method
+
+		self.log.info("New request: %s", method)
 
 		if len(args) > 0:
 			if args[0] in self.pages.keys():
