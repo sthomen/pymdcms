@@ -6,6 +6,7 @@ from time import sleep
 from datetime import datetime,timedelta
 from easysnmp import Session,EasySNMPNoSuchObjectError
 import json
+import logging
 
 from collections import deque,OrderedDict
 from graph.line import LineGraph
@@ -17,6 +18,11 @@ class Sensors(Applet):
 
 	def __init__(self, config, menus):
 		Applet.__init__(self, config, menus)
+
+		self.log=logging.getLogger(__name__)
+
+		if config.has_option('sensors', 'debug') and config.getboolean('sensors', 'debug'):
+			self.log.setLevel(logging.DEBUG)
 
 		self.add_template_dir(os.path.join(os.path.dirname(__file__), 'templates', 'sensors'))
 
@@ -40,7 +46,11 @@ class Sensors(Applet):
 
 				Sensors.sensors.start()
 
+		self.log.info("Startup sequence completed")
+
 	def dispatch(self, method, *args, **kwargs):
+		self.log.debug("Dispatching %s %s, %s", method, ', '.join(args), ', '.join([': '.join([k, v]) for k,v in kwargs.items()]))
+
 		self.metadata={
 			'title':'Sensors',
 			'css':	'apps/css/sensors.css'
@@ -52,6 +62,8 @@ class Sensors(Applet):
 			output=self.graph(args[2])
 		else:
 			output=self.show_sensors()
+
+		self.log.debug('Metadata: %s', ', '.join([': '.join([k,v]) for k,v in self.metadata.items()]))
 
 		return output
 
