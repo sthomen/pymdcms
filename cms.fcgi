@@ -3,6 +3,7 @@
 
 import os
 import sys
+import logging
 
 from ConfigParser import ConfigParser
 from flup.server.fcgi import WSGIServer
@@ -13,6 +14,8 @@ from lib.dispatcher import Dispatcher
 if __name__ == '__main__':
 	config=ConfigParser()
 	config.read('cms.conf')
+
+	logging.basicConfig(stream=sys.stderr)
 
 	cp_config={}
 
