@@ -31,13 +31,8 @@ class MarkdownPage(Page):
 		self.filename=fn
 
 	def render(self, method, args, kwargs):
-		self._load()
+		self.metadata=self.metadata_defaults.copy()
 
-		self.metadata['content']=markdown(self.markdown, ['markdown.extensions.extra'])
-
-		return super(MarkdownPage,self).render(method, args, kwargs)
-
-	def _load(self):
 		with open(self.filename) as fp:
 			rollback=0;
 
@@ -57,3 +52,8 @@ class MarkdownPage(Page):
 			fp.seek(rollback)
 
 			self.markdown=fp.read()
+
+		self.metadata['content']=markdown(self.markdown, ['markdown.extensions.extra'])
+
+		return super(MarkdownPage,self).render(method, args, kwargs)
+

@@ -20,10 +20,14 @@ class Page(object):
 			'menus': menus
 		}
 
+		self.metadata_defaults=self.metadata.copy()
+
 	def reload(self):
 		pass
 
 	def render(self, method, args, kwargs):
-		self.metadata['content']=Template(text=self.metadata['content']).render(**self.metadata)
+		content=self.metadata['content'] or ''
+
+		self.metadata['content']=Template(text=content).render(**self.metadata)
 
 		return self.lookup.get_template(self.metadata['template']).render(**self.metadata)
