@@ -1,0 +1,33 @@
+## vim:ft=xml:ts=4:sw=4:
+<div class="app-sensors">
+ <h1>Sensors</h1>
+
+%if history:
+% for datatype,data in history.items():
+<div class="sensors-${datatype}">
+<h2>${datatype.title()}</h2>
+%  for index,datum in data.items():
+<%
+item=list(datum)[0]
+%>
+<div class="sensor sensor-${item[5]}">
+<span class="sensor-name sensor-name-${item[5]}">Sensor ${item[5]}:</span>
+<span class="sensor-value sensor-value-${item[5]}">${float(item[3]) / 100}</span>
+<span class="sensor-unit sensor-unit-${item[5]}">\
+%   if item[2] == 'temperature':
+&deg;C\
+%   elif item[2] == 'humidity':
+%%\
+%   endif
+</span>
+</div>
+%  endfor
+
+<div class="graph graph-${datatype}">
+${graphs.get(datatype)}
+</div>
+
+</div>
+% endfor
+%endif
+</div>

@@ -4,6 +4,8 @@
 #
 # - arbitrary time resolution
 
+import sys
+
 from datetime import datetime, timedelta
 from math import ceil,floor
 import copy
@@ -127,13 +129,14 @@ class LineGraph(Graph):
 			graphs[i].add(paths[i])
 
 		pidx=0					# path index
-		idx=0					# index used for spacing of the date markers
 		width=0.1				# stroke width for vertical lines XXX
 
 		for data in self.data:
 			delta=len(data.keys())
 			tend=self.date_start-timedelta(seconds=delta*self.granularity)
 			tdelta=self.date_start-tend
+
+			idx=0				# index used for spacing of the date markers
 
 			for key,value in data.items():
 				date=datetime.strptime(key, self.formats[self.DATE])

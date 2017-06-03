@@ -12,10 +12,10 @@
 		ajax('GET', [w.location.href, "ajax"].join("/"), function (evt) {
 			var data=JSON.parse(this.responseText);
 			for (var key in data) {
-				var element=d.querySelector('.value-' + data[key][1]);
+				var element=d.querySelector('.sensors-' + data[key][2] + ' .sensor-value-' + data[key][5]);
 				element.innerHTML=(parseInt(data[key][3])/100.0);
 
-				updateGraph(key);
+				updateGraph(data[key][2]);
 			}
 		});
 	}
