@@ -57,7 +57,7 @@ class Sensors(Applet):
 	def show_sensors(self):
 		self.metadata['js']='/'.join([self.base_url, 'js', 'sensors.js'])
 
-		return self.render('display', {'data': self.sensors.data, 'updated': self.sensors.updated, 'graphs': self.sensors.graphs})
+		return self.render('display', {'history': self.sensors.history, 'updated': self.sensors.updated, 'graphs': self.sensors.graphs})
 
 	def ajax_sensors(self):
 		self.metadata['content-type']='application/json'
@@ -65,8 +65,8 @@ class Sensors(Applet):
 
 		return json.dumps(self.sensors.data)
 
-	def graph(self, index):
+	def graph(self, datatype):
 		self.metadata['content-type']='image/svg+xml'
 		self.metadata['template']='ajax'
 
-		return self.sensors.graphs.get(index)
+		return self.sensors.graphs.get(datatype)

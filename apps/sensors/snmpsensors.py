@@ -1,7 +1,5 @@
 # vim:ts=4:sw=4:
 
-import sys
-
 from threading import Thread
 from time import sleep
 from datetime import datetime,timedelta
@@ -93,11 +91,21 @@ class SnmpSensors(Thread):
 		return result
 
 	def store_history(self):
-		for index,datum in self.data.items():
-			if not index in self.history.keys():
-				self.history[index]=deque([(None,None),]*self.queuesize, self.queuesize)
+		for istr,datum in self.data.items():
+			sensortype=datum.get(self.mib['type'])
+			# the index is a string here
+			index=int(istr)
 
-			self.history[index].appendleft((self.updated.strftime(self.dateformat), float(self.data[index].get(self.mib['value']) or 0) / 100),)
+			if not sensortype in self.history.keys():
+				self.history[sensortype]={}
+
+			if not index in self.history[sensortype]:
+				self.history[sensortype][index]=deque({}, self.queuesize)
+
+			# XXX overwrites date value to the sampled time value
+			datum[self.mib['updated']]=self.updated.strftime('%Y-%m-%d %H:%M:%S')
+
+			self.history[sensortype][index].appendleft(datum)
 
 	def render_graphs(self):
 		"""
@@ -108,33 +116,47 @@ class SnmpSensors(Thread):
 		"""
 
 		graphs={}
-		for index in self.data.keys():
-			graphs.update({index: self.render_graph(index)})
+		for datatype in self.history.keys():
+			graphs.update({datatype: self.render_graph(datatype)})
 
 		self.graphs=graphs
 
-	def render_graph(self, index):
+	def render_graph(self, datatype):
 		"""
-		Render a single graph for self.history[index]
+		Render a single graph for self.history[datatype]
 		"""
 
-		data=OrderedDict([(date, value) for date, value in self.history[index] if date != None])
+		data=[]
 
-		if data.values():
-			big=max(data.values())
-			small=min(data.values())
+		big=20
+		small=0
 
-			if small > 0:
-				small=0
+		for index,datum in self.history[datatype].items():
+			items=list(datum)
 
-			if big < 0:
-				big=0
+			values={}
 
-		else:
-			big=20
-			small=0
+			for item in items:
+				date=item[self.mib['updated']]
+				value=float(item[self.mib['value']]) / 100
 
-		graph=LineGraph(self.updated, big, small, data=[data], granularity=self.polltime)
+				if value > big:
+					big=value
+
+				if value < small:
+					small=value
+	
+				if small > 0:
+					small=0
+	
+				if big < 0:
+					big=0
+
+				values.update({date: value})
+
+			data.append(values)
+
+		graph=LineGraph(self.updated, big, small, data=data, granularity=self.polltime)
 		graph.draw()
 
 		return graph.write()
