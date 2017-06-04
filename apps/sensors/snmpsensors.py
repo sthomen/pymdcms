@@ -100,7 +100,7 @@ class SnmpSensors(Thread):
 				self.history[sensortype]={}
 
 			if not index in self.history[sensortype]:
-				self.history[sensortype][index]=deque({}, self.queuesize)
+				self.history[sensortype][index]=deque(OrderedDict(), self.queuesize)
 
 			# XXX overwrites date value to the sampled time value
 			datum[self.mib['updated']]=self.updated.strftime('%Y-%m-%d %H:%M:%S')
@@ -134,7 +134,7 @@ class SnmpSensors(Thread):
 		for index,datum in self.history[datatype].items():
 			items=list(datum)
 
-			values={}
+			values=OrderedDict()
 
 			for item in items:
 				date=item[self.mib['updated']]
