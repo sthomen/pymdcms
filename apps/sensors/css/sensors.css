@@ -24,3 +24,36 @@
 .datapoint-popup.visible {
 	opacity: 1;
 }
+
+.sensor:before {
+	content: '';
+	display: inline-block;
+	vertical-align: middle;
+
+	width: 15px;
+	height: 10px;
+}
+
+.sensor-index-1:before {
+	background: #abc;
+}
+
+.sensor-index-2:before {
+	background: #cab;
+}
+
+.sensor-index-3:before {
+	background: #bca;
+}
+
+.sensor-index-4:before {
+	background: #cba;
+}
+
+.sensor-index-5:before {
+	background: #bac;
+}
+
+.sensor-index-6:before {
+	background: #acb;
+}
