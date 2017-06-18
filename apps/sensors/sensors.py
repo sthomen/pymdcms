@@ -19,6 +19,9 @@ class Sensors(Applet):
 
 		self.add_template_dir(os.path.join(self.base_path, 'templates'))
 
+		# load sensor aliases from config
+		self.load_aliases()
+
 		# XXX
 		# Reference class variable here to keep only one update thread per application.
 		# There may well be multiple query threads however, since the wsgi app may be
@@ -28,8 +31,13 @@ class Sensors(Applet):
 		# settle with this approach.
 
 		if not Sensors.sensors:
-			if config.has_option('sensors', 'hostname') and config.has_option('sensors', 'community') and config.has_option('sensors', 'version') and config.has_option('sensors', 'oid'):
+			config_ok=True
 
+			for key in ('hostname', 'community', 'version', 'oid'):
+				if not config.has_option('sensors', key):
+					config_ok=False
+
+			if config_ok:
 				Sensors.sensors=SnmpSensors(config.get('sensors', 'hostname'),
 					config.get('sensors', 'community'),
 					config.get('sensors', 'version'),
@@ -57,7 +65,7 @@ class Sensors(Applet):
 	def show_sensors(self):
 		self.metadata['js']='/'.join([self.base_url, 'js', 'sensors.js'])
 
-		return self.render('display', {'history': self.sensors.history, 'updated': self.sensors.updated, 'graphs': self.sensors.graphs})
+		return self.render('display', {'history': self.sensors.history, 'updated': self.sensors.updated, 'graphs': self.sensors.graphs, 'aliases': self.aliases})
 
 	def ajax_sensors(self):
 		self.metadata['content-type']='application/json'
@@ -70,3 +78,11 @@ class Sensors(Applet):
 		self.metadata['template']='ajax'
 
 		return self.sensors.graphs.get(datatype)
+
+	def load_aliases(self):
+		self.aliases={}
+
+		if not self.config.has_section('sensor aliases'):
+			return
+
+		self.aliases=dict(self.config.items('sensor aliases'))

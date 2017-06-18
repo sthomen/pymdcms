@@ -34,6 +34,11 @@
 	height: 10px;
 }
 
+.sensor > * {
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .sensor-index-1:before {
 	background: #abc;
 }
