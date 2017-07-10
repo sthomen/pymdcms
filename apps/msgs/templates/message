@@ -1,0 +1,6 @@
+<h2>${message.title}</h2>
+<h4>${message.date}</h2>
+
+%for para in message.message:
+<p>${para}</p>
+%endfor

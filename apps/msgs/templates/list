@@ -1,0 +1,14 @@
+<h2>Service announcements</h2>
+<table>
+<%
+keys = list.messages.keys()
+keys.sort()
+keys.reverse()
+%>
+
+%for index in keys:
+<tr>
+<td><a href="messages/message/${index}">${list.messages[index].title}</a></td><td>${list.messages[index].date}</td>
+</tr>
+%endfor
+</table>
