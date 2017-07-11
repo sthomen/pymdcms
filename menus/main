@@ -3,6 +3,6 @@ name = main
 
 [links]
 Home = index
-Messages = messages
+Service status = messages
 Domain services = domain
 Sensors = sensors

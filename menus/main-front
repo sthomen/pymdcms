@@ -3,5 +3,5 @@ name = main-front
 
 [links]
 Domain services = domain
-Messages = messages
+Service status = messages
 Sensors = sensors
