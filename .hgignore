@@ -1,6 +1,4 @@
 glob:*.pyc
-glob:pebble/*
-glob:.well-known/*
-glob:old/*
+glob:cms.conf
 regexp:apps/(?!(__init__.py|applet.py))
 regexp:theme/(?!(default))
