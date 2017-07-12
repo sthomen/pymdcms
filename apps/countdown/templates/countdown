@@ -1,5 +1,0 @@
-<div id="countdown">
- <span id="current">${current}</span>
- <span id="remaining">${remaining}</span> 
- <span id="formatted">Countdown to <span id="target">${target}</span>, ${formatted}</span>
-</div>

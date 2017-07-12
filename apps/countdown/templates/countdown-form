@@ -1,6 +1,0 @@
-<div id="countdown-form">
-<form>
-<input type="text" name="time" value="${target}" />
-<input type="submit" value="Go" />
-</form>
-</div>
