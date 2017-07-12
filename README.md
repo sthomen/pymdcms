@@ -30,6 +30,9 @@ To set up, install the above modules (there's a requirements.txt for pip
 convenience) and hook it up to your webserver like any other FastCGI
 application.
 
+You will also need to create a configuration file named `cms.conf` in the
+program root directory, an example is provided in `./examples/`.
+
 Documents served are by default located in `./pages/` and the url to them is
 simply the filename.
 
