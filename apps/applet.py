@@ -1,5 +1,6 @@
 # vim:ts=4:sw=4:
 
+import cherrypy
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
@@ -18,3 +19,6 @@ class Applet(object):
 
 	def render(self, template, data={}):
 		return self.lookup.get_template(template).render(**data)
+
+	def redirect(self, path):
+		raise cherrypy.HTTPRedirect(path)
