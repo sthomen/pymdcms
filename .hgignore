@@ -2,3 +2,5 @@ glob:*.pyc
 glob:pebble/*
 glob:.well-known/*
 glob:old/*
+regexp:apps/(?!(__init__.py|applet.py))
+regexp:theme/(?!(default))
