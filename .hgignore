@@ -1,4 +1,8 @@
-glob:*.pyc
-glob:cms.conf
-regexp:apps/(?!(__init__.py|applet.py))
-regexp:theme/(?!(default))
+syntax:glob
+.hgignore.local
+*.pyc
+cms.conf
+
+syntax: regexp
+apps/(?!(__init__.py|applet.py))
+theme/(?!(default))
