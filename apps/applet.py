@@ -14,6 +14,11 @@ class Applet(object):
 		self.config=config
 		self.menus=menus
 
+	def dispatch(self, method, *args, **kwargs):
+		self._body=''
+		if method in cherrypy.request.methods_with_bodies:
+			self._body=cherrypy.request.body.read()
+
 	def add_template_dir(self, path):
 		self.lookup.directories.append(path)
 
