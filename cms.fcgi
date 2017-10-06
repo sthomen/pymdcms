@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/data/www/thomen.fi/.ve/bin/python
 # vim:ts=4:sw=4:
 
 import os
@@ -37,7 +37,11 @@ if __name__ == '__main__':
 
 		cherrypy.quickstart(Dispatcher(config), config=cp_config)
 	else:
-		app = cherrypy.Application(Dispatcher(config), config=cp_config)
+		# Add script name to work with apache
+		# note that the starting slash is important, or cherrypy will
+		# replace the script name with 'i' for some reason
+
+		app = cherrypy.Application(Dispatcher(config), '/cms.fcgi', config=cp_config)
 
 		cherrypy.config.update({
 			'environment': 'embedded',
