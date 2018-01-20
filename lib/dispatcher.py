@@ -45,8 +45,14 @@ class Dispatcher(object):
 			if args[0] in self.pages.keys():
 				output=self.pages[args[0]].render(method, args, kwargs)
 
-				if hasattr(self.pages[args[0]], "metadata") and 'content-type' in self.pages[args[0]].metadata:
-					cherrypy.response.headers['Content-Type']=self.pages[args[0]].metadata['content-type']
+				if hasattr(self.pages[args[0]], "metadata"):
+					if 'content-type' in self.pages[args[0]].metadata:
+						cherrypy.response.headers['Content-Type']=self.pages[args[0]].metadata['content-type']
+
+					if 'headers' in self.pages[args[0]].metadata:
+						headers=self.parse_header_string(self.pages[args[0]].metadata['headers'])
+						for header,value in headers.items():
+							cherrypy.response.headers[header]=value
 
 				return output
 			else:
@@ -55,3 +61,12 @@ class Dispatcher(object):
 		else:
 			if 'index' in self.pages.keys():
 				return self.pages['index'].render(method, args, kwargs)
+
+	def parse_header_string(self, string):
+		output={}
+		for header in string.split(';'):
+			key,value = header.split('=')
+			output[str(key).lower()]=value
+
+		return output
+				
