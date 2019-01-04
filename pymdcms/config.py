@@ -44,6 +44,21 @@ class Config(object):
 
 	@classmethod
 	@checkinit
+	def items(cls, section):
+		return cls.config.items(section)
+
+	@classmethod
+	@checkinit
+	def has_section(cls, section):
+		return cls.config.has_section(section)
+
+	@classmethod
+	@checkinit
+	def has_option(cls, section, option):
+		return cls.config.has_option(section, option)
+
+	@classmethod
+	@checkinit
 	def save(cls):
 		with open(cls.fn, 'wb') as fp:
 			cls.config.write(fp)
