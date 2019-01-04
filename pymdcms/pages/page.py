@@ -3,21 +3,22 @@
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
+from ..config import Config
+from ..menus import Menus
+
 class Page(object):
 	lookup=None
 
-	def __init__(self, config, menus):
-		self.config=config
-
+	def __init__(self):
 		if not Page.lookup:
-			Page.lookup=TemplateLookup(directories=[config.get('global', 'theme')], default_filters=['decode.utf8'], input_encoding='utf-8', output_encoding='utf-8')
+			Page.lookup=TemplateLookup(directories=[Config.get('global', 'theme')], default_filters=['decode.utf8'], input_encoding='utf-8', output_encoding='utf-8')
 
 		# set metadata defaults
 		self.metadata={
-			'base': config.get('global', 'base'),
-			'theme': config.get('global', 'theme'),
+			'base': Config.get('global', 'base'),
+			'theme': Config.get('global', 'theme'),
 			'template': 'page',
-			'menus': menus
+			'menus': Menus
 		}
 
 		self.metadata_defaults=self.metadata.copy()

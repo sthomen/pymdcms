@@ -5,15 +5,12 @@ from mako.template import Template
 from mako.lookup import TemplateLookup
 
 class Applet(object):
-	def __init__(self, config, menus):
+	def __init__(self):
 		self.lookup=TemplateLookup(
 			default_filters=['decode.utf8'],
 			input_encoding='utf-8',
 			output_encoding='utf-8')
 		
-		self.config=config
-		self.menus=menus
-
 	def dispatch(self, method, *args, **kwargs):
 		self._body=''
 		if method in cherrypy.request.methods_with_bodies:

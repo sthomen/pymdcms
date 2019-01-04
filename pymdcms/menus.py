@@ -7,39 +7,39 @@ import glob
 from ConfigParser import ConfigParser
 from collections import OrderedDict
 
+from config import Config
+
 class Menus(object):
-	def __init__(self, config):
-		self.config=config
+	menus = {}
 
-		self.menus = {}
+	def __init__(self):
+		Menus.load()
 
-		self.reload()
-
-	def reload(self):
-		path = self.config.get('menus', 'path')
+	@classmethod
+	def load(cls):
+		path = Config.get('menus', 'path')
 
 		for fn in glob.glob(os.path.join(path, '*')):
-			self.menus.update({fn: Menu(fn)})
+			cls.menus.update({fn: Menu(fn)})
 
-	def has(self, menu):
-		if menu in self.find(menu):
+	@classmethod
+	def has(cls, menu):
+		if menu in cls.find(menu):
 			return True
 
 		return False
 
-	def get(self, menu):
-		return self.find(menu)
+	@classmethod
+	def get(cls, menu):
+		return cls.find(menu)
 
-	def find(self, name):
-		for id,menu in self.menus.items():
+	@classmethod
+	def find(cls, name):
+		for id,menu in cls.menus.items():
 			if menu.name == name:
 				return menu
 
 		return None
-			
-
-	def __repr__(self):
-		return repr(self.menus)
 
 class Menu(object):
 	def __init__(self, path):

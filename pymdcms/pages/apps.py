@@ -4,28 +4,26 @@ import sys
 import os.path
 import glob
 
+from ..config import Config
 from page import Page
 
 class Apps(object):
-	def __init__(self, config, menus):
-		self.config=config
-		self.menus=menus
-
+	def __init__(self):
 		self.pages = {}
-		for name in self.config.options('apps'):
+		for name in Config.options('apps'):
 			self.pages.update({
-				name: AppPage(config, menus, self.config.get('apps', name))
+				name: AppPage(Config.get('apps', name))
 			})
 
 class AppPage(Page):
-	def __init__(self, config, menus, path):
-		Page.__init__(self, config, menus)
+	def __init__(self, path):
+		Page.__init__(self)
 
 		module,name=path.rsplit('.', 1)
 
 		app=__import__(module, fromlist=[ name ])
 
-		self.app=getattr(app, name)(config, menus)
+		self.app=getattr(app, name)()
 
 	def render(self, method, args, kwargs):
 		self.metadata=self.metadata_defaults.copy()

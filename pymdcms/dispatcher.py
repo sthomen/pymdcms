@@ -6,23 +6,21 @@ import signal
 
 import cherrypy
 
-from pages.md import Markdown
+from config import Config
+
+from pages.md import Md
 from pages.apps import Apps
-from menus.menu import Menus
+from menus import Menus
 
 class Dispatcher(object):
-	menus=None
-
-	def __init__(self, config):
-		self.config=config
-
+	def __init__(self):
 		self.pages={}
 
-		self.menus=Menus(config)
+		Menus()
 
 		self.handlers=[
-			Markdown(config, self.menus),
-			Apps(config, self.menus)
+			Md(),
+			Apps()
 		]
 
 		for handler in self.handlers:
@@ -33,7 +31,7 @@ class Dispatcher(object):
 
 
 	def refresh_content(self, signal, frame):
-		self.menus.reload()
+		Menus.load()
 		for handler in self.handlers:
 			handler.reload()
 
@@ -69,4 +67,3 @@ class Dispatcher(object):
 			output[str(key).lower()]=value
 
 		return output
-				

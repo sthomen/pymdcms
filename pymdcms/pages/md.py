@@ -6,28 +6,25 @@ import glob
 
 import time
 
-from markdown import markdown
-
+from ..config import Config
+from ..mdrenderer import MDRenderer
 from page import Page
 
-class Markdown(object):
-	def __init__(self, config, menus):
-		self.config=config
-		self.menus=menus
-
+class Md(object):
+	def __init__(self):
 		self.pages = {}
 
 		self.reload()
 
 	def reload(self):
-		path = self.config.get('pages', 'path')
+		path = Config.get('pages', 'path')
 
 		for fn in glob.glob(os.path.join(path, '*')):
-			self.pages.update(((os.path.basename(fn), MarkdownPage(self.config, self.menus, fn)),))
+			self.pages.update(((os.path.basename(fn), MarkdownPage(fn)),))
 
 class MarkdownPage(Page):
-	def __init__(self, config, menus, fn=None):
-		Page.__init__(self, config, menus)
+	def __init__(self, fn=None):
+		Page.__init__(self)
 		self.filename=fn
 
 	def render(self, method, args, kwargs):
@@ -53,7 +50,7 @@ class MarkdownPage(Page):
 
 			self.markdown=fp.read()
 
-		self.metadata['content']=markdown(self.markdown, ['markdown.extensions.extra'])
+		self.metadata['content']=MDRenderer.render(self.markdown)
 
 		return super(MarkdownPage,self).render(method, args, kwargs)
 
