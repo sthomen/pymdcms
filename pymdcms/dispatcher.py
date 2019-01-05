@@ -8,23 +8,23 @@ import cherrypy
 
 from config import Config
 
-from pages.md import Md
-from pages.apps import Apps
+from mdpages import MDPages
+from apps import Apps
 from menus import Menus
+from renderer import Renderer
 
 class Dispatcher(object):
 	def __init__(self):
 		self.pages={}
 
+		# initialize menus
 		Menus()
 
+		# set up MD and app handlers
 		self.handlers=[
-			Md(),
+			MDPages(),
 			Apps()
 		]
-
-		for handler in self.handlers:
-			self.pages.update(handler.pages)
 
 		signal.signal(signal.SIGHUP, self.refresh_content)
 		signal.signal(signal.SIGUSR1, self.refresh_content)
@@ -39,26 +39,27 @@ class Dispatcher(object):
 	def default(self, *args, **kwargs):
 		method=cherrypy.request.method
 
-		if len(args) > 0:
-			if args[0] in self.pages.keys():
-				output=self.pages[args[0]].render(method, args, kwargs)
+		if not args:
+			args=['index']
 
-				if hasattr(self.pages[args[0]], "metadata"):
-					if 'content-type' in self.pages[args[0]].metadata:
-						cherrypy.response.headers['Content-Type']=self.pages[args[0]].metadata['content-type']
+		for handler in self.handlers:
+			page = handler.getpage(args)
 
-					if 'headers' in self.pages[args[0]].metadata:
-						headers=self.parse_header_string(self.pages[args[0]].metadata['headers'])
-						for header,value in headers.items():
-							cherrypy.response.headers[header]=value
+			if page:
+				output = page.render(method, *args, **kwargs)
+
+				if 'content-type' in page:
+					cherrypy.response.headers['Content-Type']=page['content-type']
+
+				if 'headers' in page:
+					headers = self.parse_header_string(page.headers)
+
+					for header, value in headers.items():
+						cherrypy.response.headers[header]=value
 
 				return output
-			else:
-				raise cherrypy.HTTPError(404)
 
-		else:
-			if 'index' in self.pages.keys():
-				return self.pages['index'].render(method, args, kwargs)
+		raise cherrypy.HTTPError(404)
 
 	def parse_header_string(self, string):
 		output={}
