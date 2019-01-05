@@ -14,9 +14,16 @@ class Renderer(object):
 				input_encoding='utf-8', 
 				output_encoding='utf-8')
 
+	def add_path(self, path):
+		self.lookup.directories.append(path)
+		return self
+
 	def render(self, page):
 		# render into a copy
 		values = dict(page)
 		values['content'] = Template(text=page.content).render(**values)
 
-		return self.lookup.get_template(page.template).render(**values)
+		return self.raw(page.template, values)
+
+	def raw(self, template, data={}):
+		return self.lookup.get_template(template).render(**data)
