@@ -3,7 +3,8 @@ Date: Wed Jun 15 14:20:32 EEST 2016
 
 # Super simple CMS with python and markdown
 
-> As with most software I write, I had a need for something and this is no different.
+> As with most software I write, I had a need for something and this is no
+> different.
 
 This time, I wanted to host webpages and the occasional form (although this
 code is much more powerful than just form receiving) on my "ancient" Alpha
@@ -13,13 +14,14 @@ The primary requirements for this program was minimalism, flexibility and speed.
 
 Apart from python itself, there are only a few dependencies, all of which are
 platform independent. This was important because anyone who've ever tried to
-port an application to anything other than middle class caucasian male software / hardware (I'm looking at you, GNU/Linux and i386) will know that problems
-multiply with dependencies.
+port an application to anything other than middle class caucasian male
+software / hardware (I'm looking at you, GNU/Linux and i386) will know that
+problems multiply with dependencies.
 
 PyMDCMS currently requires:
 
 	CherryPy>=6.0.1
-	flup>=1.0.2
+	flup6>=1.1.1
 	Mako>=1.0.4
 	Markdown>=2.6.6
 
