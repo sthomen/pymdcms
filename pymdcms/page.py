@@ -16,7 +16,7 @@ class Page(dict):
 	def __getattr__(self, key):
 		try:
 			return self[key]
-		except IndexError:
+		except KeyError:
 			return None
 
 	def __setattr__(self, key, value):
