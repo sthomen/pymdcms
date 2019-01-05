@@ -1,5 +1,5 @@
 from functools import wraps
-from ConfigParser import SafeConfigParser
+from ConfigParser import ConfigParser
 
 def checkinit(f):
 	@wraps(f)
@@ -21,7 +21,7 @@ class Config(object):
 	@classmethod
 	def load(cls, fn):
 		cls.fn = fn
-		cls.config = SafeConfigParser()
+		cls.config = ConfigParser()
 		cls.config.read(cls.fn)
 
 	@classmethod
@@ -31,11 +31,6 @@ class Config(object):
 			return cls.config.get(section, option)
 		except:
 			return None
-
-	@classmethod
-	@checkinit
-	def set(cls, section, option, value):
-		cls.config.set(section, option, value)
 
 	@classmethod
 	@checkinit
@@ -56,9 +51,3 @@ class Config(object):
 	@checkinit
 	def has_option(cls, section, option):
 		return cls.config.has_option(section, option)
-
-	@classmethod
-	@checkinit
-	def save(cls):
-		with open(cls.fn, 'wb') as fp:
-			cls.config.write(fp)
