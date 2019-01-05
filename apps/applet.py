@@ -20,3 +20,14 @@ class Applet(object):
 
 	def redirect(self, path):
 		raise cherrypy.HTTPRedirect(path)
+
+	@staticmethod
+	def pad(s, l, f=None, fmt=unicode):
+		"""
+		A simple method for ensuring that input values conforms to the
+		expected format of a list of a given length
+		"""
+		try:
+			return [ fmt(s[i]) if i < len(s) else f for i in range(0, l) ]
+		except TypeError:
+			return [f] * l
