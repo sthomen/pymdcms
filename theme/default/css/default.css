@@ -74,3 +74,36 @@ ul.menu li:last-child {
 ul.menu a {
 	color: #fff;
 }
+
+ul.blog-list,
+ul.blog-list li {
+	list-style-type: none;
+
+	margin: 0;
+	padding: 0;
+}
+
+ul.blog-list li {
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: #CCCCCC;
+}
+
+ul.blog-list li:last-child {
+	border-width: 0;
+}
+
+article .title {
+	margin: 0.25em 0;
+}
+
+article .strapline {
+	margin: 0.25em 0;
+
+	text-transform: uppercase;
+	font-weight: normal;
+}
+
+article header date {
+	font-size: 80%;
+}
