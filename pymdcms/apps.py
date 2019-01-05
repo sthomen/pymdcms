@@ -36,9 +36,13 @@ class AppPage(Page):
 		self.app=getattr(app, name)()
 
 	def render(self, method, *args, **kwargs):
-		self.content=self.app.dispatch(method, *args, **kwargs)
+		# Use a dummy Page here so that we don't clobber the defaults
+		# we set in __init__ when changing something in the actual app.
+		data = Page()
+
+		data.content=self.app.dispatch(method, *args, **kwargs)
 
 		if hasattr(self.app, 'metadata'):
-			self.update(self.app.metadata)
+			data.update(self.app.metadata)
 
-		return self.renderer.render(self)
+		return self.renderer.render(data)
