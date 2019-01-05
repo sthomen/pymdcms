@@ -24,5 +24,5 @@ class MDPages(Handler):
 	def reload(self):
 		path = Config.get('pages', 'path')
 
-		for fn in glob.glob(os.path.join(path, '*')):
-			self.pages.update({os.path.basename(fn): MDPage().from_file(fn)})
+		for fn in os.listdir(path):
+			self.pages.update({fn: MDPage().from_file(os.path.join(path, fn))})
