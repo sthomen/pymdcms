@@ -4,6 +4,7 @@ import sys
 import os.path
 import glob
 
+from datetime import datetime, timedelta
 from ConfigParser import ConfigParser
 from collections import OrderedDict
 
@@ -11,6 +12,8 @@ from config import Config
 
 class Menus(object):
 	menus = {}
+	cacheinterval=timedelta(seconds=60)
+	updated = 0
 
 	def __init__(self):
 		Menus.load()
@@ -21,6 +24,8 @@ class Menus(object):
 
 		for fn in glob.glob(os.path.join(path, '*')):
 			cls.menus.update({fn: Menu(fn)})
+
+		cls.updated = datetime.now()
 
 	@classmethod
 	def has(cls, menu):
@@ -35,6 +40,9 @@ class Menus(object):
 
 	@classmethod
 	def find(cls, name):
+		if cls.updated + cls.cacheinterval < datetime.now():
+			cls.load()
+        
 		for id,menu in cls.menus.items():
 			if menu.name == name:
 				return menu

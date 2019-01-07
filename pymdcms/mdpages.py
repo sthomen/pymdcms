@@ -1,23 +1,25 @@
 # vim:ts=4:sw=4:
 
-import sys
-import os.path
+import os
 import glob
 
-import time
+from datetime import datetime, timedelta
 
 from config import Config
 from mdpage import MDPage
 from handler import Handler
 
 class MDPages(Handler):
+	cacheinterval=timedelta(seconds=60)
+
 	def __init__(self):
 		self.pages = {}
-
 		self.reload()
 
 	def getpage(self, route):
-		# XXX the structure here is flat so far, make it work with depth?
+		if self.updated + self.cacheinterval < datetime.now():
+			self.reload()
+
 		if route[0] in self.pages:
 			return self.pages[route[0]]
 
@@ -26,3 +28,5 @@ class MDPages(Handler):
 
 		for fn in os.listdir(path):
 			self.pages.update({fn: MDPage().from_file(os.path.join(path, fn))})
+
+		self.updated = datetime.now()
