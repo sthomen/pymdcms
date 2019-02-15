@@ -5,7 +5,6 @@ from renderer import Renderer
 class Page(dict):
 	def __init__(self):
 		self.update({
-			'base': Config.get('global', 'base'),
 			'theme': Config.get('global', 'theme'),
 			'template': 'page',
 			'menus': Menus
