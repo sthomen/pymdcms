@@ -44,6 +44,8 @@ class Dispatcher(object):
 			page = handler.getpage(args)
 
 			if page:
+				page.base='{}/'.format(cherrypy.request.base)
+
 				output = page.render(method, *args, **kwargs)
 
 				if 'content-type' in page:

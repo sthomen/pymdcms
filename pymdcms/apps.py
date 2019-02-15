@@ -42,6 +42,10 @@ class AppPage(Page):
 
 		data.content=self.app.dispatch(method, *args, **kwargs)
 
+		# Add page-level metadata, this is currently only for the base
+		# template variable.
+		data.update(self)
+
 		if hasattr(self.app, 'metadata'):
 			data.update(self.app.metadata)
 
