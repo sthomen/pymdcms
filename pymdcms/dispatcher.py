@@ -15,8 +15,6 @@ from renderer import Renderer
 
 class Dispatcher(object):
 	def __init__(self):
-		self.pages={}
-
 		# initialize menus
 		Menus()
 
