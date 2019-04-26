@@ -4,10 +4,10 @@ import sys
 import os.path
 import glob
 
-from config import Config
-from page import Page
-from handler import Handler
-from renderer import Renderer
+from .config import Config
+from .page import Page
+from .handler import Handler
+from .renderer import Renderer
 
 class Apps(Handler):
 	def __init__(self):

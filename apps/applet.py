@@ -22,7 +22,7 @@ class Applet(object):
 		raise cherrypy.HTTPRedirect(path)
 
 	@staticmethod
-	def pad(s, l, f=None, fmt=unicode):
+	def pad(s, l, f=None, fmt=str):
 		"""
 		A simple method for ensuring that input values conforms to the
 		expected format of a list of a given length

@@ -6,12 +6,12 @@ import signal
 
 import cherrypy
 
-from config import Config
+from .config import Config
 
-from mdpages import MDPages
-from apps import Apps
-from menus import Menus
-from renderer import Renderer
+from .mdpages import MDPages
+from .apps import Apps
+from .menus import Menus
+from .renderer import Renderer
 
 class Dispatcher(object):
 	def __init__(self):

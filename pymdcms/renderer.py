@@ -1,7 +1,7 @@
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
-from config import Config
+from .config import Config
 
 class Renderer(object):
 	lookup = None

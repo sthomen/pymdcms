@@ -1,5 +1,5 @@
 from functools import wraps
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 
 def checkinit(f):
 	@wraps(f)

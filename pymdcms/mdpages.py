@@ -5,9 +5,9 @@ import glob
 
 from datetime import datetime, timedelta
 
-from config import Config
-from mdpage import MDPage
-from handler import Handler
+from .config import Config
+from .mdpage import MDPage
+from .handler import Handler
 
 class MDPages(Handler):
 	cacheinterval=timedelta(seconds=60)

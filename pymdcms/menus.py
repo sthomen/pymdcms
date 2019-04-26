@@ -5,10 +5,10 @@ import os.path
 import glob
 
 from datetime import datetime, timedelta
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 from collections import OrderedDict
 
-from config import Config
+from .config import Config
 
 class Menus(object):
 	menus = {}
@@ -64,7 +64,7 @@ class Menu(object):
 			self._items.update({ title: cp.get('links', title) })
 
 	def items(self):
-		return self._items.items()
+		return list(self._items.items())
 
 	def __repr__(self):
 		return repr(self._items)

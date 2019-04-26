@@ -1,5 +1,5 @@
 from markdown import markdown
-from page import Page
+from .page import Page
 
 class MDPage(Page):
 	def from_file(self, fn):

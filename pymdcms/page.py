@@ -1,6 +1,6 @@
-from config import Config
-from menus import Menus
-from renderer import Renderer
+from .config import Config
+from .menus import Menus
+from .renderer import Renderer
 
 class Page(dict):
 	def __init__(self):
