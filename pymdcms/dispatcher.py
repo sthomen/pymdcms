@@ -37,6 +37,10 @@ class Dispatcher(object):
 	def default(self, *args, **kwargs):
 		method=cherrypy.request.method
 
+		base = '{}/'.format(cherrypy.request.base)
+
+		Config.set('global', 'base', base)
+
 		if not args:
 			args=['index']
 
@@ -44,7 +48,7 @@ class Dispatcher(object):
 			page = handler.getpage(args)
 
 			if page:
-				page.base='{}/'.format(cherrypy.request.base)
+				page.base = base
 
 				output = page.render(method, *args, **kwargs)
 
