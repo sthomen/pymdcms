@@ -35,6 +35,38 @@ class AppPage(Page):
 
 		self.app=getattr(app, name)()
 
+	########################################################################
+	# XXX This hack handles the content-type metadata for app pages, since
+	# they need to be set in the AppPage to act like a regular Page that has
+	# a static content-type (if any)
+	#
+
+	APP_META=('content-type', 'headers')
+
+	def __contains__(self, name):
+		if name in self.APP_META and name in self.app.metadata:
+			return True
+
+		return Page.__contains__(self, name)
+
+	def __getitem__(self, name):
+		result = None
+
+		if name in self.APP_META:
+			try:
+				result = self.app.metadata.get(name)
+			except:
+				pass
+
+		if result:
+			return result
+
+		return Page.__getitem__(self, name)
+
+	#
+	# XXX
+	########################################################################
+
 	def render(self, method, *args, **kwargs):
 		# Use a dummy Page here so that we don't clobber the defaults
 		# we set in __init__ when changing something in the actual app.
