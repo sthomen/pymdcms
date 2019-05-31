@@ -19,6 +19,14 @@ class Config(object):
 		Config.load(fn)
 
 	@classmethod
+	@checkinit
+	def set(cls, section, option, value):
+		try:
+			cls.config.set(section, option, value)
+		except:
+			pass
+
+	@classmethod
 	def load(cls, fn):
 		cls.fn = fn
 		cls.config = ConfigParser()
