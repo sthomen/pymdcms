@@ -21,6 +21,9 @@ class Applet(object):
 	def redirect(self, path):
 		raise cherrypy.HTTPRedirect(path)
 
+	def error(self, code, message=None):
+		raise cherrypy.HTTPError(code, message)
+
 	@staticmethod
 	def pad(s, l, f=None, fmt=str):
 		"""
