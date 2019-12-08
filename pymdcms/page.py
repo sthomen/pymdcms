@@ -21,5 +21,5 @@ class Page(dict):
 	def __setattr__(self, key, value):
 		self[key]=value
 
-	def render(self, method, *args, **kwargs):
+	def render(self, request):
 		return self.renderer.render(self)

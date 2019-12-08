@@ -21,9 +21,9 @@ class Apps(Handler):
 
 		self.renderer = Renderer()
 
-	def getpage(self, route):
-		if route[0] in self.pages.keys():
-			return self.pages[route[0]]
+	def getpage(self, request):
+		if request.route[0] in self.pages.keys():
+			return self.pages[request.route[0]]
 
 class AppPage(Page):
 	def __init__(self, path):
@@ -67,12 +67,12 @@ class AppPage(Page):
 	# XXX
 	########################################################################
 
-	def render(self, method, *args, **kwargs):
+	def render(self, request):
 		# Use a dummy Page here so that we don't clobber the defaults
 		# we set in __init__ when changing something in the actual app.
 		data = Page()
 
-		data.content=self.app.dispatch(method, *args, **kwargs)
+		data.content=self.app.dispatch(request)
 
 		# Add page-level metadata, this is currently only for the base
 		# template variable.

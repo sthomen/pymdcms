@@ -12,6 +12,7 @@ from .mdpages import MDPages
 from .apps import Apps
 from .menus import Menus
 from .renderer import Renderer
+from .request import Request
 
 class Dispatcher(object):
 	def __init__(self):
@@ -27,7 +28,6 @@ class Dispatcher(object):
 		signal.signal(signal.SIGHUP, self.refresh_content)
 		signal.signal(signal.SIGUSR1, self.refresh_content)
 
-
 	def refresh_content(self, signal, frame):
 		Menus.load()
 		for handler in self.handlers:
@@ -35,22 +35,18 @@ class Dispatcher(object):
 
 	@cherrypy.expose
 	def default(self, *args, **kwargs):
-		method=cherrypy.request.method
+		request = Request(route=args, query=kwargs, headers=cherrypy.request.headers)
 
 		base = '{}/'.format(cherrypy.request.base)
 
 		Config.set('global', 'base', base)
 
-		if not args:
-			args=['index']
-
 		for handler in self.handlers:
-			page = handler.getpage(args)
+			page = handler.getpage(request)
 
 			if page:
 				page.base = base
-
-				output = page.render(method, *args, **kwargs)
+				output = page.render(request)
 
 				if 'content-type' in page:
 					cherrypy.response.headers['Content-Type']=page['content-type']

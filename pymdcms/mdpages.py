@@ -16,12 +16,12 @@ class MDPages(Handler):
 		self.pages = {}
 		self.reload()
 
-	def getpage(self, route):
+	def getpage(self, request):
 		if self.updated + self.cacheinterval < datetime.now():
 			self.reload()
 
-		if route[0] in self.pages:
-			return self.pages[route[0]]
+		if request.route[0] in self.pages:
+			return self.pages[request.route[0]]
 
 	def reload(self):
 		path = Config.get('pages', 'path')

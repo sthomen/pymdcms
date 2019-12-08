@@ -1,7 +1,7 @@
 from .page import Page
 
 class Handler(object):
-	def getpage(self, route):
+	def getpage(self, request):
 		return Page()
 
 	def reload(self):
