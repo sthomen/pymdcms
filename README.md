@@ -60,8 +60,8 @@ If you'd like to perform an action with a form, you'll need to build an applet.
 There's a small demo-applet in the `apps/test.py` file, and it should be enough
 to get you started.
 
-Applets are required to implement the `dispatch` method and to accept two
-parameters to `__init__`; these are the ConfigParser object and the Menus.
+Applets are required to implement the `dispatch` method accepting one parameter
+which is the request.
 Other than that you're free to do what you like.
 
 There is also a convenience superclass `applet.Applet` that you may use if
@@ -71,7 +71,7 @@ methods (for now).
 Use `Applet.add_template_dir()` to add a template directory where you want
 to store your app-specific templates to the lookup, and then just return
 `self.render("template_file", dict)` where dict is a dictionary of template
-variables. Don't forget to call `Applet.__init__`.
+variables.
 
 If an applet sets an object property named `metadata` to be a dictionary, it
 will be merged with the page metadata and you are able to override variables
