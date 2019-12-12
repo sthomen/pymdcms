@@ -7,9 +7,9 @@ class Applet(object):
 	def __init__(self):
 		self.renderer = Renderer()
 		
-	def dispatch(self, method, *args, **kwargs):
+	def dispatch(self, request):
 		self._body=''
-		if method in cherrypy.request.methods_with_bodies:
+		if request.method in cherrypy.request.methods_with_bodies:
 			self._body=cherrypy.request.body.read()
 
 	def add_template_dir(self, path):
