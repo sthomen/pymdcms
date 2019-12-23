@@ -13,7 +13,7 @@ class DefaultDict(dict):
 		to set the values at once. Note that update respects
 		the defaults.
 		"""
-		self.update(**values)
+		self.update(values)
 
 	def __getattr__(self, name):
 		"""
@@ -45,7 +45,7 @@ class DefaultDict(dict):
 
 		dict.__setitem__(self, name, value)
 
-	def update(self, **kwargs):
+	def update(self, kwargs):
 		"""
 		Override for the dict update method, to invoke our
 		__setitem__ method.
