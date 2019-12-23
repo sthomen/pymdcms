@@ -1,1 +1,2 @@
-version=1.1
+from .version import Version
+version=Version(1,1)

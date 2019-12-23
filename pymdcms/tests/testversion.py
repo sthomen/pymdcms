@@ -35,3 +35,13 @@ class TestVersion(unittest.TestCase):
 	def test_creating_version_with_single_int_value(self):
 		version = Version(1)
 		self.assertEqual([1], version)
+
+	def test_float_conversion(self):
+		version = Version(0,0,1)
+		self.assertEqual(0.01, float(version))
+
+		version = Version(1)
+		self.assertEqual(1.0, float(version))
+
+		version = Version(1,2,3)
+		self.assertEqual(1.23, float(version))
