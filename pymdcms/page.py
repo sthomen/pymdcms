@@ -1,25 +1,17 @@
 from .config import Config
 from .menus import Menus
 from .renderer import Renderer
+from .util.defaultdict import DefaultDict
 
-class Page(dict):
+class Page(DefaultDict):
 	def __init__(self):
-		self.update({
-			'theme': Config.get('global', 'theme'),
-			'template': 'page',
-			'menus': Menus
-		})
+		DefaultDict.__init__(self,
+			theme=Config.get('global', 'theme'),
+			template='page',
+			menus=Menus,
+			headers={'Content-Type': 'text/plain'})
 
 		self.renderer = Renderer()
-
-	def __getattr__(self, key):
-		try:
-			return self[key]
-		except KeyError:
-			return None
-
-	def __setattr__(self, key, value):
-		self[key]=value
 
 	def render(self, request):
 		return self.renderer.render(self)
