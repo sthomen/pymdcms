@@ -9,7 +9,7 @@ class Page(DefaultDict):
 			theme=Config.get('global', 'theme'),
 			template='page',
 			menus=Menus,
-			headers={'Content-Type': 'text/plain'})
+			headers=('Content-Type=text/html'))
 
 		self.renderer = Renderer()
 
