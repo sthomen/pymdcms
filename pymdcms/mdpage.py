@@ -4,12 +4,12 @@ from .page import Page
 class MDPage(Page):
 	def from_file(self, fn):
 		try:
-			with open(fn) as fp:
+			with open(fn, 'r', encoding='utf-8') as fp:
 				rollback=0;
 
 				while True:
 					rollback=fp.tell()
-					line=fp.readline().strip()
+					line=fp.readline()
 
 					if not line:
 						break
