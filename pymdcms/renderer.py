@@ -21,7 +21,7 @@ class Renderer(object):
 	def render(self, page):
 		# render into a copy
 		values = dict(page)
-		values['content'] = Template(text=page.content).render(**values)
+		values['content'] = page.content
 
 		return self.raw(page.template, values)
 
